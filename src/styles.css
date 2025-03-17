@@ -133,24 +133,37 @@
   /* Tab styles */
   .tabs {
     display: flex;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
+    gap: 1rem;
+    padding: 0 0.5rem;
+    width: 100%;
+    justify-content: center;
   }
   
   .tab-btn {
-    padding: 0.8rem 1.5rem;
-    background-color: var(--light-bg);
+    padding: 1rem 2rem;
+    background-color: var(--card-bg);
     border: none;
-    border-radius: var(--border-radius) var(--border-radius) 0 0;
-    font-size: 1rem;
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
     font-weight: 600;
     color: var(--text-color);
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+    transition: all 0.3s ease;
+    box-shadow: var(--box-shadow);
+    min-width: 200px;
+    flex: 0 1 300px;
+  }
+  
+  .tab-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
   }
   
   .tab-btn.active {
     background-color: var(--primary-color);
     color: white;
+    transform: translateY(-2px);
   }
   
   .tab-content {
