@@ -9,6 +9,8 @@ const expectedCtcInput = document.getElementById("expected-ctc");
 const hikePercentageElement = document.getElementById("hike-percentage");
 const tabButtons = document.querySelectorAll(".tab-btn");
 const tabContents = document.querySelectorAll(".tab-content");
+const currentMonthlyInput = document.getElementById("current-monthly");
+const expectedMonthlyInput = document.getElementById("expected-monthly");
 
 // Format currency in INR
 function formatCurrency(amount) {
@@ -100,6 +102,16 @@ function setupInputFormatting(inputElement) {
   return inputElement.value.replace(/,/g, "");
 }
 
+// Synchronize monthly and yearly values
+function syncMonthlyYearly(monthlyInput, yearlyInput, isMonthlyToYearly) {
+  const value = parseFloat(monthlyInput.value.replace(/,/g, "")) || 0;
+  const synced = isMonthlyToYearly ? value * 12 : value / 12;
+  
+  if (value > 0) {
+    yearlyInput.value = formatNumber(Math.round(synced));
+  }
+}
+
 // Input validation - allow only numbers and basic formatting
 ctcInput.addEventListener("input", function(e) {
   const numOnly = setupInputFormatting(this);
@@ -109,11 +121,25 @@ ctcInput.addEventListener("input", function(e) {
 // Setup event listeners for hike calculator
 currentCtcInput.addEventListener("input", function(e) {
   setupInputFormatting(this);
+  syncMonthlyYearly(this, currentMonthlyInput, false);
+  calculateHike();
+});
+
+currentMonthlyInput.addEventListener("input", function(e) {
+  setupInputFormatting(this);
+  syncMonthlyYearly(this, currentCtcInput, true);
   calculateHike();
 });
 
 expectedCtcInput.addEventListener("input", function(e) {
   setupInputFormatting(this);
+  syncMonthlyYearly(this, expectedMonthlyInput, false);
+  calculateHike();
+});
+
+expectedMonthlyInput.addEventListener("input", function(e) {
+  setupInputFormatting(this);
+  syncMonthlyYearly(this, expectedCtcInput, true);
   calculateHike();
 });
 
@@ -124,4 +150,6 @@ window.addEventListener("DOMContentLoaded", () => {
   setupInputFormatting(ctcInput);
   setupInputFormatting(currentCtcInput);
   setupInputFormatting(expectedCtcInput);
+  setupInputFormatting(currentMonthlyInput);
+  setupInputFormatting(expectedMonthlyInput);
 });

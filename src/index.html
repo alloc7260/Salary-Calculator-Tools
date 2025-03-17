@@ -39,13 +39,29 @@
         
         <div class="tab-content" id="hike-calc">
             <div class="calculator">
-                <div class="input-group">
-                    <label for="current-ctc">Current Annual CTC (₹)</label>
-                    <input type="text" id="current-ctc" placeholder="Enter your current CTC" inputmode="numeric" />
-                </div>
-                <div class="input-group">
-                    <label for="expected-ctc">Expected Annual CTC (₹)</label>
-                    <input type="text" id="expected-ctc" placeholder="Enter your expected CTC" inputmode="numeric" />
+                <div class="salary-input-groups">
+                    <div class="salary-group">
+                        <h3>Current Salary</h3>
+                        <div class="input-group">
+                            <label for="current-ctc">Annual CTC (₹)</label>
+                            <input type="text" id="current-ctc" placeholder="Enter yearly CTC" inputmode="numeric" />
+                        </div>
+                        <div class="input-group">
+                            <label for="current-monthly">Monthly CTC (₹)</label>
+                            <input type="text" id="current-monthly" placeholder="Enter monthly CTC" inputmode="numeric" />
+                        </div>
+                    </div>
+                    <div class="salary-group">
+                        <h3>Expected Salary</h3>
+                        <div class="input-group">
+                            <label for="expected-ctc">Annual CTC (₹)</label>
+                            <input type="text" id="expected-ctc" placeholder="Enter yearly CTC" inputmode="numeric" />
+                        </div>
+                        <div class="input-group">
+                            <label for="expected-monthly">Monthly CTC (₹)</label>
+                            <input type="text" id="expected-monthly" placeholder="Enter monthly CTC" inputmode="numeric" />
+                        </div>
+                    </div>
                 </div>
                 <div class="results">
                     <div class="result-card full-width">

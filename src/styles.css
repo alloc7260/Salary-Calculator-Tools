@@ -69,7 +69,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
-    margin-bottom: 2rem;
   }
   
   .result-card {
@@ -167,6 +166,25 @@
     grid-column: 1 / -1;
   }
   
+  .salary-input-groups {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .salary-group {
+    background-color: var(--light-bg);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+  }
+  
+  .salary-group h3 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+  
   @media (max-width: 768px) {
     .container {
       padding: 1rem;
@@ -188,6 +206,11 @@
     .tab-btn {
       width: 100%;
       border-radius: var(--border-radius);
+    }
+    
+    .salary-input-groups {
+      grid-template-columns: 1fr;
+      gap: 1rem;
     }
   }
   
