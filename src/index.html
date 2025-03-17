@@ -2,33 +2,58 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CTC to In-Hand Salary Calculator</title>
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 </head>
 
 <body>
     <div class="container">
-        <h1>CTC to In-Hand Salary Calculator</h1>
-        <div class="calculator">
-            <div class="input-group">
-                <label for="ctc">Annual CTC (₹)</label>
-                <input type="text" id="ctc" placeholder="Enter your CTC" inputmode="numeric">
-            </div>
-
-            <div class="results">
-                <div class="result-card">
-                    <h3>Monthly In-Hand (Min)</h3>
-                    <div class="amount" id="min-salary">₹ 0</div>
+        <h1>Salary Calculator Tools</h1>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="inhand-calc">CTC to In-Hand</button>
+            <button class="tab-btn" data-tab="hike-calc">CTC Hike Calculator</button>
+        </div>
+        
+        <div class="tab-content active" id="inhand-calc">
+            <div class="calculator">
+                <div class="input-group">
+                    <label for="ctc">Annual CTC (₹)</label>
+                    <input type="text" id="ctc" placeholder="Enter your CTC" inputmode="numeric" />
                 </div>
-                <div class="result-card">
-                    <h3>Monthly In-Hand (Max)</h3>
-                    <div class="amount" id="max-salary">₹ 0</div>
+                <div class="results">
+                    <div class="result-card">
+                        <h3>Monthly In-Hand (Min)</h3>
+                        <div class="amount" id="min-salary">₹ 0</div>
+                    </div>
+                    <div class="result-card">
+                        <h3>Monthly In-Hand (Max)</h3>
+                        <div class="amount" id="max-salary">₹ 0</div>
+                    </div>
                 </div>
             </div>
-
+        </div>
+        
+        <div class="tab-content" id="hike-calc">
+            <div class="calculator">
+                <div class="input-group">
+                    <label for="current-ctc">Current Annual CTC (₹)</label>
+                    <input type="text" id="current-ctc" placeholder="Enter your current CTC" inputmode="numeric" />
+                </div>
+                <div class="input-group">
+                    <label for="expected-ctc">Expected Annual CTC (₹)</label>
+                    <input type="text" id="expected-ctc" placeholder="Enter your expected CTC" inputmode="numeric" />
+                </div>
+                <div class="results">
+                    <div class="result-card full-width">
+                        <h3>Percentage Hike</h3>
+                        <div class="amount" id="hike-percentage">0%</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script type="module" src="app.js"></script>
