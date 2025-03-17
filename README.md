@@ -1,6 +1,4 @@
-# CTC-To-InHand
-CTC to In-Hand Salary Calculator
-
-## Screenshot
-
-![CTC-To-InHand Screenshot](images/Screenshot1.png?raw=true)
+# Salary Calculator Tools
+Salary Calculator Tools
+1. CTC to In-Hand
+2. CTC Hike Calculator
