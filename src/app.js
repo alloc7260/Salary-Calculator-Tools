@@ -7,10 +7,15 @@ const maxSalaryElement = document.getElementById("max-salary");
 const currentCtcInput = document.getElementById("current-ctc");
 const expectedCtcInput = document.getElementById("expected-ctc");
 const hikePercentageElement = document.getElementById("hike-percentage");
-const tabButtons = document.querySelectorAll(".tab-btn");
+const tabButtons = document.querySelectorAll(".tab-button");
 const tabContents = document.querySelectorAll(".tab-content");
 const currentMonthlyInput = document.getElementById("current-monthly");
 const expectedMonthlyInput = document.getElementById("expected-monthly");
+
+// New DOM elements for Hike Estimation tab
+const estimationCurrentCtcInput = document.getElementById("estimation-current-ctc");
+const hikePercentageInput = document.getElementById("hike-percentage-input");
+const expectedCtcAfterHikeElement = document.getElementById("expected-ctc-after-hike");
 
 // Format currency in INR
 function formatCurrency(amount) {
@@ -62,18 +67,56 @@ function calculateHike() {
   hikePercentageElement.textContent = hikePercentage.toFixed(2) + "%";
 }
 
+// Calculate expected CTC based on current CTC and hike percentage
+function calculateExpectedCtc() {
+  const currentCtc = parseFloat(estimationCurrentCtcInput.value.replace(/,/g, "")) || 0;
+  const hikePercentage = parseFloat(hikePercentageInput.value.replace(/,/g, "")) || 0;
+  
+  if (currentCtc <= 0 || hikePercentage < 0) {
+    expectedCtcAfterHikeElement.textContent = "₹ 0";
+    return;
+  }
+  
+  const expectedCtc = currentCtc * (1 + hikePercentage / 100);
+  expectedCtcAfterHikeElement.textContent = formatCurrency(expectedCtc);
+}
+
 // Handle tab switching
 function setupTabs() {
+  // Apply initial styles to all buttons
   tabButtons.forEach(button => {
-    button.addEventListener("click", () => {
-      // Remove active class from all tabs
-      tabButtons.forEach(btn => btn.classList.remove("active"));
-      tabContents.forEach(content => content.classList.remove("active"));
+    // Default style for inactive buttons
+    if (!button.getAttribute('data-tab').includes("inhand-calc")) {
+      button.classList.add("bg-blue-100", "text-blue-800", "hover:bg-blue-200");
+    } else {
+      // First tab is active by default
+      button.classList.add("active", "bg-blue-600", "text-white", "hover:bg-blue-700");
+    }
+    
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
       
-      // Add active class to current tab
+      // Remove active styles from all tab buttons and hide all tab contents
+      tabButtons.forEach(btn => {
+        btn.classList.remove("active");
+        btn.classList.remove("bg-blue-600", "text-white", "hover:bg-blue-700");
+        btn.classList.add("bg-blue-100", "text-blue-800", "hover:bg-blue-200");
+      });
+      
+      tabContents.forEach(content => {
+        content.classList.add("hidden");
+        content.classList.remove("block");
+      });
+      
+      // Add active style to clicked button and show associated tab content
       button.classList.add("active");
+      button.classList.remove("bg-blue-100", "text-blue-800", "hover:bg-blue-200");
+      button.classList.add("bg-blue-600", "text-white", "hover:bg-blue-700");
+      
       const tabId = button.getAttribute("data-tab");
-      document.getElementById(tabId).classList.add("active");
+      const activeContent = document.getElementById(tabId);
+      activeContent.classList.remove("hidden");
+      activeContent.classList.add("block");
     });
   });
 }
@@ -143,13 +186,32 @@ expectedMonthlyInput.addEventListener("input", function(e) {
   calculateHike();
 });
 
+// Setup event listeners for hike estimation tab
+estimationCurrentCtcInput.addEventListener("input", function(e) {
+  setupInputFormatting(this);
+  calculateExpectedCtc();
+});
+
+hikePercentageInput.addEventListener("input", function(e) {
+  setupInputFormatting(this);
+  calculateExpectedCtc();
+});
+
 // Initialize the UI
 window.addEventListener("DOMContentLoaded", () => {
   setupTabs();
   calculateSalary(0);
+  // Apply initial active styles to the first tab
+  const activeTab = document.querySelector('.tab-button.active');
+  if (activeTab) {
+    activeTab.classList.remove("bg-blue-600"); // Remove default blue color
+    activeTab.classList.add("bg-blue-600", "text-white", "hover:bg-blue-700");
+  }
   setupInputFormatting(ctcInput);
   setupInputFormatting(currentCtcInput);
   setupInputFormatting(expectedCtcInput);
   setupInputFormatting(currentMonthlyInput);
   setupInputFormatting(expectedMonthlyInput);
+  setupInputFormatting(estimationCurrentCtcInput);
+  setupInputFormatting(hikePercentageInput);
 });

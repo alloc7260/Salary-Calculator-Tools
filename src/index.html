@@ -5,74 +5,97 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CTC to In-Hand Salary Calculator</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script type="module" src="app.js"></script>
+    <link rel="icon" type="image/png" href="calculator.png" />
 </head>
 
-<body>
-    <div class="container">
-        <h1>Salary Calculator Tools</h1>
+<body class="bg-gray-50 text-gray-800">
+    <div class="max-w-3xl mx-auto p-8">
+        <h1 class="text-center mb-8 text-3xl font-bold text-blue-600">Salary Calculator Tools</h1>
         
-        <div class="tabs">
-            <button class="tab-btn active" data-tab="inhand-calc">CTC to In-Hand</button>
-            <button class="tab-btn" data-tab="hike-calc">CTC Hike Calculator</button>
-        </div>
+        <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 justify-center gap-4 mb-8 overflow-x-auto">
+            <li class="me-2">
+                <a href="#" data-tab="inhand-calc" class="tab-button inline-block px-4 py-3 rounded-lg">CTC to In-Hand</a>
+            </li>
+            <li class="me-2">
+                <a href="#" data-tab="hike-estimation" class="tab-button inline-block px-4 py-3 rounded-lg">Hike Estimation</a>
+            </li>
+            <li class="me-2">
+                <a href="#" data-tab="hike-calc" class="tab-button inline-block px-4 py-3 rounded-lg">CTC Hike Calculator</a>
+            </li>
+        </ul>
         
-        <div class="tab-content active" id="inhand-calc">
-            <div class="calculator">
-                <div class="input-group">
-                    <label for="ctc">Annual CTC (₹)</label>
-                    <input type="text" id="ctc" placeholder="Enter your CTC" inputmode="numeric" />
+        <div id="inhand-calc" class="tab-content block">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="mb-6">
+                    <label for="ctc" class="block mb-2 font-semibold">Annual CTC (₹)</label>
+                    <input type="text" id="ctc" placeholder="Enter your CTC" inputmode="numeric" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"/>
                 </div>
-                <div class="results">
-                    <div class="result-card">
-                        <h3>Monthly In-Hand (Min)</h3>
-                        <div class="amount" id="min-salary">₹ 0</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="bg-gray-50 p-4 rounded shadow text-center">
+                        <h3 class="mb-2 text-lg font-medium text-blue-600">Monthly In-Hand (Min)</h3>
+                        <div id="min-salary" class="text-2xl font-bold text-blue-600">₹ 0</div>
                     </div>
-                    <div class="result-card">
-                        <h3>Monthly In-Hand (Max)</h3>
-                        <div class="amount" id="max-salary">₹ 0</div>
+                    <div class="bg-gray-50 p-4 rounded shadow text-center">
+                        <h3 class="mb-2 text-lg font-medium text-blue-600">Monthly In-Hand (Max)</h3>
+                        <div id="max-salary" class="text-2xl font-bold text-blue-600">₹ 0</div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div id="hike-estimation" class="tab-content hidden">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="mb-6">
+                    <label for="estimation-current-ctc" class="block mb-2 font-semibold">Current CTC (₹)</label>
+                    <input type="text" id="estimation-current-ctc" placeholder="Enter your current CTC" inputmode="numeric" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"/>
+                </div>
+                <div class="mb-6">
+                    <label for="hike-percentage-input" class="block mb-2 font-semibold">Expected Hike (%)</label>
+                    <input type="number" id="hike-percentage-input" placeholder="Enter expected hike percentage" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"/>
+                </div>
+                <div class="bg-gray-50 p-4 rounded shadow text-center">
+                    <h3 class="mb-2 text-lg font-medium text-blue-600">Expected CTC After Hike</h3>
+                    <div id="expected-ctc-after-hike" class="text-2xl font-bold text-blue-600">₹ 0</div>
+                </div>
+            </div>
+        </div>
         
-        <div class="tab-content" id="hike-calc">
-            <div class="calculator">
-                <div class="salary-input-groups">
-                    <div class="salary-group">
-                        <h3>Current Salary</h3>
-                        <div class="input-group">
-                            <label for="current-ctc">Annual CTC (₹)</label>
-                            <input type="text" id="current-ctc" placeholder="Enter yearly CTC" inputmode="numeric" />
+        <div id="hike-calc" class="tab-content hidden">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-gray-50 p-4 rounded shadow">
+                        <h3 class="mb-4 text-lg font-medium text-blue-600">Current Salary</h3>
+                        <div class="mb-4">
+                            <label for="current-ctc" class="block mb-2 font-semibold">Annual CTC (₹)</label>
+                            <input type="text" id="current-ctc" placeholder="Enter yearly CTC" inputmode="numeric" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"/>
                         </div>
-                        <div class="input-group">
-                            <label for="current-monthly">Monthly CTC (₹)</label>
-                            <input type="text" id="current-monthly" placeholder="Enter monthly CTC" inputmode="numeric" />
+                        <div>
+                            <label for="current-monthly" class="block mb-2 font-semibold">Monthly CTC (₹)</label>
+                            <input type="text" id="current-monthly" placeholder="Enter monthly CTC" inputmode="numeric" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"/>
                         </div>
                     </div>
-                    <div class="salary-group">
-                        <h3>Expected Salary</h3>
-                        <div class="input-group">
-                            <label for="expected-ctc">Annual CTC (₹)</label>
-                            <input type="text" id="expected-ctc" placeholder="Enter yearly CTC" inputmode="numeric" />
+                    <div class="bg-gray-50 p-4 rounded shadow">
+                        <h3 class="mb-4 text-lg font-medium text-blue-600">Expected Salary</h3>
+                        <div class="mb-4">
+                            <label for="expected-ctc" class="block mb-2 font-semibold">Annual CTC (₹)</label>
+                            <input type="text" id="expected-ctc" placeholder="Enter yearly CTC" inputmode="numeric" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"/>
                         </div>
-                        <div class="input-group">
-                            <label for="expected-monthly">Monthly CTC (₹)</label>
-                            <input type="text" id="expected-monthly" placeholder="Enter monthly CTC" inputmode="numeric" />
+                        <div>
+                            <label for="expected-monthly" class="block mb-2 font-semibold">Monthly CTC (₹)</label>
+                            <input type="text" id="expected-monthly" placeholder="Enter monthly CTC" inputmode="numeric" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"/>
                         </div>
                     </div>
                 </div>
-                <div class="results">
-                    <div class="result-card full-width">
-                        <h3>Percentage Hike</h3>
-                        <div class="amount" id="hike-percentage">0%</div>
-                    </div>
+                <div class="bg-gray-50 p-4 rounded shadow text-center">
+                    <h3 class="mb-2 text-lg font-medium text-blue-600">Percentage Hike</h3>
+                    <div id="hike-percentage" class="text-2xl font-bold text-blue-600">0%</div>
                 </div>
             </div>
         </div>
     </div>
-    <script type="module" src="app.js"></script>
 </body>
 
 </html>
