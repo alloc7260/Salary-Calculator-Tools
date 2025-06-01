@@ -89,7 +89,9 @@ function updateChart(currentCtc = 0) {
         show: false,
       },
       zoom: {
-        enabled: false,
+        type: "x",
+        enabled: true,
+        autoScaleYaxis: true,
       },
     },
     series: [
