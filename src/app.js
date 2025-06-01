@@ -79,7 +79,7 @@ function updateChart(currentCtc = 0) {
   const chartContainer = document.getElementById("apex-curved-line-charts");
   if (!chartContainer) return;
 
-  const { categories, minValues, maxValues } = generateChartData(currentCtc);
+  const { dataPoints, minValues, maxValues } = generateChartData(currentCtc);
 
   const options = {
     chart: {
@@ -111,7 +111,7 @@ function updateChart(currentCtc = 0) {
       horizontalAlign: "center",
     },
     xaxis: {
-      categories: categories,
+      categories: dataPoints,
       tickAmount: 8, // Limit to show only 8 ticks
       title: {
         text: "Annual CTC in Lakhs",
