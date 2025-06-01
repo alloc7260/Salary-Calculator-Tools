@@ -46,6 +46,95 @@ function calculateSalary(ctc) {
   updateUI(result);
 }
 
+var salaryChart;
+
+// Generate chart data points
+function generateChartData(currentCtc = 0) {
+  const dataPoints = [];
+  const minValues = [];
+  const maxValues = [];
+
+  // Generate data points from 0 to 80 lakhs
+  const maxRange = Math.max(8000000);
+  let ctc = 0;
+  while (ctc <= maxRange) {
+    if (ctc === 0) {
+      dataPoints.push(0);
+      minValues.push(0);
+      maxValues.push(0);
+    } else {
+      const result = calculateInHandSalary(ctc);
+      dataPoints.push(Math.round(ctc / 100000)); // Convert to lakhs for x-axis
+      minValues.push(Math.round(result.range_5)); // Keep actual values for y-axis
+      maxValues.push(Math.round(result.max_in_hand)); // Keep actual values for y-axis
+    }
+    ctc += 100000; // Increase by 1 lakh per data point
+  }
+
+  return { dataPoints, minValues, maxValues };
+}
+
+// Initialize or update the chart
+function updateChart(currentCtc = 0) {
+  const chartContainer = document.getElementById("apex-curved-line-charts");
+  if (!chartContainer) return;
+
+  const { categories, minValues, maxValues } = generateChartData(currentCtc);
+
+  const options = {
+    chart: {
+      height: 400,
+      type: "area",
+      toolbar: {
+        show: false,
+      },
+      zoom: {
+        enabled: false,
+      },
+    },
+    series: [
+      {
+        name: "Min Monthly In-Hand",
+        data: minValues,
+      },
+      {
+        name: "Max Monthly In-Hand",
+        data: maxValues,
+      },
+    ],
+    dataLabels: {
+      enabled: false,
+    },
+    legend: {
+      show: true,
+      position: "bottom",
+      horizontalAlign: "center",
+    },
+    xaxis: {
+      categories: categories,
+      tickAmount: 8, // Limit to show only 8 ticks
+      title: {
+        text: "Annual CTC in Lakhs",
+      },
+    },
+    yaxis: {
+      title: {
+        text: "Monthly In-Hand (₹)",
+      },
+    },
+    tooltip: {
+      shared: true,
+    },
+  };
+
+  if (salaryChart) {
+    salaryChart.destroy();
+  }
+
+  salaryChart = new ApexCharts(chartContainer, options);
+  salaryChart.render();
+}
+
 // Update the UI with calculation results
 function updateUI(result) {
   // Update salary amounts
@@ -201,6 +290,7 @@ hikePercentageInput.addEventListener("input", function(e) {
 window.addEventListener("DOMContentLoaded", () => {
   setupTabs();
   calculateSalary(0);
+  updateChart(0);
   // Apply initial active styles to the first tab
   const activeTab = document.querySelector('.tab-button.active');
   if (activeTab) {

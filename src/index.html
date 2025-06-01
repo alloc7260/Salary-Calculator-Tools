@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CTC to In-Hand Salary Calculator</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script type="module" src="app.js"></script>
     <link rel="icon" type="image/png" href="calculator.png" />
 </head>
@@ -33,7 +33,7 @@
                     <label for="ctc" class="block mb-2 font-semibold">Annual CTC (₹)</label>
                     <input type="text" id="ctc" placeholder="Enter your CTC" inputmode="numeric" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"/>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
                     <div class="bg-gray-50 p-4 rounded shadow text-center">
                         <h3 class="mb-2 text-lg font-medium text-blue-600">Monthly In-Hand (Min)</h3>
                         <div id="min-salary" class="text-2xl font-bold text-blue-600">₹ 0</div>
@@ -42,6 +42,10 @@
                         <h3 class="mb-2 text-lg font-medium text-blue-600">Monthly In-Hand (Max)</h3>
                         <div id="max-salary" class="text-2xl font-bold text-blue-600">₹ 0</div>
                     </div>
+                </div>
+                <div class="bg-gray-50 p-4 rounded shadow text-center">
+                    <h3 class="mb-2 text-lg font-medium text-blue-600">Salary Chart</h3>
+                    <div id="apex-curved-line-charts" class="w-full"></div>
                 </div>
             </div>
         </div>
